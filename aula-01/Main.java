@@ -4,6 +4,7 @@ import src.Menu;
 
 public class Main {
     public static void main(String[] args) {
-        Menu.principal();
+        Menu menu = new Menu();
+        menu.principal();
     }
 }
