@@ -9,14 +9,16 @@ public class Menu {
     private Vetor vetor = new Vetor();
 
     public static String[] opcoes = {
-            "Criar estrutura com tamanho",
-            "Exibir tamanho da estrutura",
-            "Exibir numero de itens",
-            "Adiciona um dado a uma posição especifica",
-            "Adiciona um dado na ultima posição",
-            "Adiciona um dado depois da ultima posição",
-            "Recupera dado de uma posição",
-            "Remove uma posição especifica"
+            "Criar estrutura",
+            "Exibir estrutura",
+            "Exibir tamanho",
+            "Alterar um dado em uma posição especifica",
+            "Adicionar um dado na primeira posição",
+            "Adicionar um dado na ultima posição",
+            "Adicionar um dado antes da primeira posição",
+            "Adicionar um dado depois da ultima posição",
+            "Recuperar os dados de uma posição",
+            "Remover uma posição especifica"
     };
 
     public static String retorno = "Retornando ao menu pricipal...";
@@ -29,7 +31,9 @@ public class Menu {
         while (opcao == -1) {
 
             limparTela();
+            Menu.divisor();
             System.out.println("Menu principal");
+            Menu.divisor();
 
             String cor = "\033[1;34m";
             String reset = "\033[0m";
@@ -37,17 +41,18 @@ public class Menu {
             System.out.print(cor);
 
             for (int i = 0; i < opcoes.length; i++) {
-                int id = i + 1;
-                System.out.println(" | " + id + " | " + opcoes[i]);
+                System.out.println(" | " + i + " | " + opcoes[i]);
             }
 
             System.out.print(reset);
+
+            Menu.divisor();
 
             System.out.println("Escolha uma opção:");
 
             opcao = this.entrada.nextInt();
 
-            if (opcao == 0 || opcao > (opcoes.length - 1)) {
+            if (opcao < 0 || opcao >= opcoes.length) {
                 opcao = -1;
             }
 
@@ -55,28 +60,34 @@ public class Menu {
         }
 
         switch (opcao) {
-            case 1:
+            case 0:
                 criarEstrutura();
                 break;
-            case 2:
+            case 1:
                 exibirEstrutura();
                 break;
+            case 2:
+                exibirTamanho();
+                break;
             case 3:
-                exibirQuantidade();
+                adicionarPosicao();
                 break;
             case 4:
-                adicionarPosicao();
+                adicionarPrimeira();
                 break;
             case 5:
                 adicionarUltima();
                 break;
             case 6:
-                adicionarDepois();
+                adicionarInicio();
                 break;
             case 7:
-                recuperarPosicao();
+                adicionarFim();
                 break;
             case 8:
+                recuperarPosicao();
+                break;
+            case 9:
                 removerPosicao();
                 break;
             default:
@@ -97,7 +108,7 @@ public class Menu {
 
         while (tamanho == -1) {
 
-            System.out.println(Menu.opcoes[0]);
+            Menu.titulo(Menu.opcoes[0]);
             System.out.println("Informe o tamanho:");
 
             tamanho = this.entrada.nextInt();
@@ -117,114 +128,231 @@ public class Menu {
         }
 
         this.vetor.criar(tamanho);
-        System.out.println("Vetor criado");
-        System.out.println(Menu.retorno);
-        Menu.aguardar(2);
-        this.principal();
+        Menu.resposta("Vetor criado, tamanho: " + tamanho);
+
+        this.pressione();
+
     }
 
     private void exibirEstrutura() {
 
-        System.out.println(Menu.opcoes[1]);
+        Menu.titulo(Menu.opcoes[1]);
 
-        this.vetor.mostraVetor();
-
-        System.out.println(Menu.pressione);
-
-        try {
-            System.in.read();
-            System.out.println(Menu.retorno);
-            this.principal();
-        } catch (Exception e) {
-            e.printStackTrace();
+        System.out.println(" | Posição | Valor ");
+        Menu.divisor();
+        for (int posicao = 0; posicao < this.vetor.tamanho(); posicao++) {
+            int dado = this.vetor.dados()[posicao];
+            Menu.resposta(" | " + posicao + " | " + dado + " | ");
         }
+
+        this.pressione();
 
     }
 
-    private void exibirQuantidade() {
+    private void exibirTamanho() {
 
-        System.out.println(Menu.opcoes[2]);
+        Menu.titulo(Menu.opcoes[2]);
 
-        this.vetor.mostraQuantidade();
+        int tamanho = this.vetor.tamanho();
+        Menu.resposta("Tamanho : " + tamanho);
 
-        System.out.println(Menu.pressione);
-
-        try {
-            System.in.read();
-            System.out.println(Menu.retorno);
-            this.principal();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        this.pressione();
 
     }
 
     private void adicionarPosicao() {
-        int tamanho = -1;
-        int dados = -1;
+        int posicao = -1;
+        int dado = -1;
 
-        while (tamanho == -1) {
+        while (posicao == -1) {
 
-            System.out.println(Menu.opcoes[3]+"[1/2]");
+            Menu.titulo(Menu.opcoes[3] + "[1/2]");
             System.out.println("Informe a posição:");
 
-            tamanho = this.entrada.nextInt();
+            posicao = this.entrada.nextInt();
 
-            if (tamanho == 0) {
+            if (posicao == 0) {
                 Menu.limparTela();
                 System.out.println(Menu.retorno);
                 Menu.aguardar(2);
                 this.principal();
             }
 
-            if (tamanho < 0) {
-                tamanho = -1;
+            if (posicao < 0) {
+                posicao = -1;
             }
 
             limparTela();
         }
 
-        while (dados == -1) {
+        while (dado == -1) {
 
-            System.out.println(Menu.opcoes[3]+"[2/2]");
+            Menu.titulo(Menu.opcoes[3] + "[2/2]");
             System.out.println("Informe o valor:");
 
-            dados = this.entrada.nextInt();
+            dado = this.entrada.nextInt();
 
-            if (dados == 0) {
+            if (dado == 0) {
                 Menu.limparTela();
                 System.out.println(Menu.retorno);
                 Menu.aguardar(2);
                 this.principal();
             }
 
-            if (dados < 0) {
-                dados = -1;
+            if (dado < 0) {
+                dado = -1;
             }
 
             limparTela();
         }
 
-        this.vetor.criar(tamanho);
-        System.out.println("Vetor criado");
-        System.out.println(Menu.retorno);
-        Menu.aguardar(2);
-        this.principal();
+        this.vetor.mudar(posicao, dado);
+        Menu.resposta("Vetor alterado, posicao: " + posicao + ", valor: " + dado);
+
+        this.pressione();
+
+    }
+
+    private void adicionarPrimeira() {
+        int dado = -1;
+
+        while (dado == -1) {
+
+            Menu.titulo(Menu.opcoes[4]);
+            System.out.println("Informe o valor");
+
+            dado = this.entrada.nextInt();
+
+            if (dado < 0) {
+                dado = -1;
+            }
+
+            limparTela();
+        }
+
+        this.vetor.primeiro(dado);
+        Menu.resposta("Valor alterado na primeira posição: " + dado);
+
+        this.pressione();
+
     }
 
     private void adicionarUltima() {
+        int dado = -1;
+
+        while (dado == -1) {
+
+            Menu.titulo(Menu.opcoes[5]);
+            System.out.println("Informe o valor");
+
+            dado = this.entrada.nextInt();
+
+            if (dado < 0) {
+                dado = -1;
+            }
+
+            limparTela();
+        }
+
+        this.vetor.ultimo(dado);
+        Menu.resposta("Valor alterado na ultima posição: " + dado);
+
+        this.pressione();
 
     }
 
-    private void adicionarDepois() {
+    private void adicionarInicio() {
+        int dado = -1;
+
+        while (dado == -1) {
+
+            Menu.titulo(Menu.opcoes[6]);
+            System.out.println("Informe o valor");
+
+            dado = this.entrada.nextInt();
+
+            if (dado < 0) {
+                dado = -1;
+            }
+
+            limparTela();
+        }
+
+        this.vetor.inicio(dado);
+        Menu.resposta("Valor adiocionado ao início: " + dado);
+
+        this.pressione();
 
     }
 
-    private void removerPosicao() {
+    private void adicionarFim() {
+        int dado = -1;
+
+        while (dado == -1) {
+
+            Menu.titulo(Menu.opcoes[7]);
+            System.out.println("Informe o valor");
+
+            dado = this.entrada.nextInt();
+
+            if (dado < 0) {
+                dado = -1;
+            }
+
+            limparTela();
+        }
+
+        this.vetor.fim(dado);
+        Menu.resposta("Valor adiocionado ao final: " + dado);
+
+        this.pressione();
 
     }
 
     private void recuperarPosicao() {
+        int posicao = -1;
+
+        while (posicao == -1) {
+
+            Menu.titulo(Menu.opcoes[8]);
+            System.out.println("Informe a posição");
+
+            posicao = this.entrada.nextInt();
+
+            if (posicao < 0) {
+                posicao = -1;
+            }
+
+            limparTela();
+        }
+
+        int valor = this.vetor.recuperar(posicao);
+        Menu.resposta("Valor recuperado da posição [" + posicao + "]: " + valor);
+
+        this.pressione();
+    }
+
+    private void removerPosicao() {
+        int posicao = -1;
+
+        while (posicao == -1) {
+
+            Menu.titulo(Menu.opcoes[9]);
+            System.out.println("Informe a posição");
+
+            posicao = this.entrada.nextInt();
+
+            if (posicao < 0) {
+                posicao = -1;
+            }
+
+            limparTela();
+        }
+
+        this.vetor.apagar(posicao);
+        Menu.resposta("Posicao removida: " + posicao);
+
+        this.pressione();
 
     }
 
@@ -234,6 +362,41 @@ public class Menu {
         } catch (InterruptedException ie) {
             ie.printStackTrace();
         }
+    }
+
+    public void pressione() {
+        Menu.divisor();
+        System.out.println(Menu.pressione);
+
+        try {
+            System.in.read();
+            System.out.println(Menu.retorno);
+            this.principal();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void titulo(String titulo) {
+        String cor = "\033[1;34m";
+        String reset = "\033[0m";
+        Menu.divisor();
+        System.out.print(cor);
+        System.out.println(titulo);
+        System.out.print(reset);
+        Menu.divisor();
+    }
+
+    public static void resposta(String titulo) {
+        String cor = "\033[0;32m";
+        String reset = "\033[0m";
+        System.out.print(cor);
+        System.out.println(titulo);
+        System.out.print(reset);
+    }
+
+    public static void divisor() {
+        System.out.println("--------------------------------------");
     }
 
 }
