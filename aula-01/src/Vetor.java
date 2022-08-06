@@ -1,7 +1,7 @@
 package src;
 
 /**
- * Objeto que cria e manipula um Vetor unidimencional de numeros inteiros
+ * Objeto que manipula um Vetor unidimencional de numeros inteiros
  */
 public class Vetor {
 
@@ -26,9 +26,13 @@ public class Vetor {
      * 
      * @param posicao
      * @param dado
-     * @return
+     * @return Vetor
      */
     public Vetor mudar(int posicao, int dado) {
+        if (!this.existe(posicao)) {
+            int tamanho = this.tamanho() + 1;
+            this.alocar(tamanho);
+        }
         this.dados[posicao] = dado;
         return this;
     }
@@ -36,7 +40,7 @@ public class Vetor {
     /**
      * Retorna o tamanho atual do vetor
      * 
-     * @return Vetor
+     * @return int
      */
     public int tamanho() {
         return this.dados.length;
@@ -45,7 +49,7 @@ public class Vetor {
     /**
      * Recupera o valor de uma determinada posição
      * @param posicao
-     * @return
+     * @return int
      */
     public int recuperar(int posicao) {
         return this.dados[posicao];
@@ -63,25 +67,31 @@ public class Vetor {
     /**
      * Apaga uma determinada posição
      * @param posicao
-     * @return
+     * @return Vetor
      */
     public Vetor apagar(int posicao) {
-        int[] novoVetor = new int[this.dados.length - 1];
-        int posicaoNova = 0;
-        for (int x = 0; x < this.dados.length; x++) {
-            if (x != posicao) {
-                novoVetor[posicaoNova] = this.dados[x];
-                posicaoNova++;
+        if (this.existe(posicao)) {
+
+            int[] novoVetor = new int[this.dados.length - 1];
+            int posicaoNova = 0;
+            
+            for (int x = 0; x < this.dados.length; x++) {
+                if (x != posicao) {
+                    novoVetor[posicaoNova] = this.dados[x];
+                    posicaoNova++;
+                }
             }
+
+            this.dados = novoVetor;
         }
-        this.dados = novoVetor;
+
         return this;
     }
 
     /**
      * Altera a primeira posição com um determinado dado
      * @param dado
-     * @return
+     * @return Vetor
      */
     public Vetor primeiro(int dado) {
         this.dados[0] = dado;
@@ -91,7 +101,7 @@ public class Vetor {
     /**
      * Altera a última posição com um determinado dado
      * @param dado
-     * @return
+     * @return Vetor
      */
     public Vetor ultimo(int dado) {
         this.dados[this.dados.length - 1] = dado;
@@ -101,7 +111,7 @@ public class Vetor {
     /**
      * Adiciona um determinado dado após a última posição
      * @param dado
-     * @return
+     * @return Vetor
      */
     public Vetor fim(int dado) {
         int tamanhoAntigo = this.dados.length;
@@ -118,7 +128,7 @@ public class Vetor {
     /**
      * Adiciona um determinado dado antes da primeira posição
      * @param dado
-     * @return
+     * @return Vetor
      */
     public Vetor inicio(int dado) {
         int novoTamanho = this.dados.length + 1;
@@ -131,8 +141,27 @@ public class Vetor {
         return this;
     }
 
-    public Vetor gerar(int tamanho) {
+    /**
+     * Aloca um tamanho especifico para o vetor com os dados já contidos
+     * @param tamanho
+     * @return Vetor
+     */
+    public Vetor alocar(int tamanho) {
+        int novoVetor[] = new int[tamanho];
+        for (int posicao = 0; posicao < this.tamanho(); posicao++) {
+            novoVetor[posicao] = this.dados[posicao];
+        }
+        this.dados = novoVetor;
         return this;
+    }
+    
+    /**
+     * Verifica se uma posicao existe no vetor atual
+     * @param posicao
+     * @return boolean
+     */
+    public boolean existe(int posicao) {
+        return posicao >= 0 && posicao < this.tamanho();
     }
 
 }

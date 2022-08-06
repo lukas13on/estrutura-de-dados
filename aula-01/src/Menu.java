@@ -18,7 +18,8 @@ public class Menu {
             "Adicionar um dado antes da primeira posição",
             "Adicionar um dado depois da ultima posição",
             "Recuperar os dados de uma posição",
-            "Remover uma posição especifica"
+            "Remover uma posição especifica",
+            "Alocar em um novo tamanho"
     };
 
     public static String retorno = "Retornando ao menu pricipal...";
@@ -89,6 +90,9 @@ public class Menu {
                 break;
             case 9:
                 removerPosicao();
+                break;
+            case 10:
+                alocarTamanho();
                 break;
             default:
                 System.out.println("Opção desconhecida");
@@ -171,13 +175,6 @@ public class Menu {
 
             posicao = this.entrada.nextInt();
 
-            if (posicao == 0) {
-                Menu.limparTela();
-                System.out.println(Menu.retorno);
-                Menu.aguardar(2);
-                this.principal();
-            }
-
             if (posicao < 0) {
                 posicao = -1;
             }
@@ -191,13 +188,6 @@ public class Menu {
             System.out.println("Informe o valor:");
 
             dado = this.entrada.nextInt();
-
-            if (dado == 0) {
-                Menu.limparTela();
-                System.out.println(Menu.retorno);
-                Menu.aguardar(2);
-                this.principal();
-            }
 
             if (dado < 0) {
                 dado = -1;
@@ -351,6 +341,30 @@ public class Menu {
 
         this.vetor.apagar(posicao);
         Menu.resposta("Posicao removida: " + posicao);
+
+        this.pressione();
+
+    }
+
+    private void alocarTamanho() {
+        int tamanho = -1;
+
+        while (tamanho == -1) {
+
+            Menu.titulo(Menu.opcoes[10]);
+            System.out.println("Informe o tamanho");
+
+            tamanho = this.entrada.nextInt();
+
+            if (tamanho < 0) {
+                tamanho = -1;
+            }
+
+            limparTela();
+        }
+
+        this.vetor.alocar(tamanho);
+        Menu.resposta("Vetor alocado no tamanho: " + tamanho);
 
         this.pressione();
 
