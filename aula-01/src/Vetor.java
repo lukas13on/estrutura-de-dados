@@ -52,7 +52,11 @@ public class Vetor {
      * @return int
      */
     public int recuperar(int posicao) {
-        return this.dados[posicao];
+        if(this.existe(posicao)){
+            return this.dados[posicao];
+        } else {
+            return -1;
+        } 
     }
     
     /**
@@ -74,7 +78,7 @@ public class Vetor {
 
             int[] novoVetor = new int[this.dados.length - 1];
             int posicaoNova = 0;
-            
+
             for (int x = 0; x < this.dados.length; x++) {
                 if (x != posicao) {
                     novoVetor[posicaoNova] = this.dados[x];
