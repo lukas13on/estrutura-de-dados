@@ -30,7 +30,9 @@ public class Vetor {
      * @return Vetor
      */
     public Vetor alterar(int posicao, int dado) {
-        this.dados[posicao] = dado;
+        if(this.existe(posicao)){
+            this.dados[posicao] = dado;
+        }
         return this;
     }
 
@@ -95,7 +97,9 @@ public class Vetor {
      * @return Vetor
      */
     public Vetor primeiro(int dado) {
-        this.dados[0] = dado;
+        if(this.existe(0)){
+            this.dados[0] = dado;
+        }
         return this;
     }
 
@@ -105,7 +109,10 @@ public class Vetor {
      * @return Vetor
      */
     public Vetor ultimo(int dado) {
-        this.dados[this.dados.length - 1] = dado;
+        int ultimo = this.dados.length - 1;
+        if(this.existe(ultimo)){
+            this.dados[ultimo] = dado;
+        }
         return this;
     }
 
