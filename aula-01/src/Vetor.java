@@ -28,11 +28,15 @@ public class Vetor {
      * @param dado
      * @return Vetor
      */
+<<<<<<< Updated upstream
     public Vetor mudar(int posicao, int dado) {
         if (!this.existe(posicao)) {
             int tamanho = this.tamanho() + 1;
             this.alocar(tamanho);
         }
+=======
+    public Vetor alterar(int posicao, int dado) {
+>>>>>>> Stashed changes
         this.dados[posicao] = dado;
         return this;
     }

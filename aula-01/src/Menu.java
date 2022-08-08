@@ -22,8 +22,7 @@ public class Menu {
             "Alocar em um novo tamanho"
     };
 
-    public static String retorno = "Retornando ao menu pricipal...";
-    public static String pressione = "Pressione qualquer tecla para continuar...";
+    public static String pressione = "Pressione a tecla [ENTER] para continuar...";
 
     public void principal() {
 
@@ -101,11 +100,9 @@ public class Menu {
 
     }
 
-    public static void limparTela() {
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-    }
-
+    /**
+     * Utiliza o método (Vetor.criar)
+     */
     private void criarEstrutura() {
 
         int tamanho = -1;
@@ -116,13 +113,6 @@ public class Menu {
             System.out.println("Informe o tamanho:");
 
             tamanho = this.entrada.nextInt();
-
-            if (tamanho == 0) {
-                Menu.limparTela();
-                System.out.println(Menu.retorno);
-                Menu.aguardar(2);
-                this.principal();
-            }
 
             if (tamanho < 0) {
                 tamanho = -1;
@@ -138,6 +128,9 @@ public class Menu {
 
     }
 
+    /**
+     * Utiliza o método (Vetor.dados)
+     */
     private void exibirEstrutura() {
 
         Menu.titulo(Menu.opcoes[1]);
@@ -153,6 +146,9 @@ public class Menu {
 
     }
 
+    /**
+     * Utiliza o método (Vetor.tamanho)
+     */
     private void exibirTamanho() {
 
         Menu.titulo(Menu.opcoes[2]);
@@ -164,6 +160,9 @@ public class Menu {
 
     }
 
+    /**
+     * Utiliza o método (Vetor.alterar)
+     */
     private void adicionarPosicao() {
         int posicao = -1;
         int dado = -1;
@@ -196,13 +195,16 @@ public class Menu {
             limparTela();
         }
 
-        this.vetor.mudar(posicao, dado);
+        this.vetor.alterar(posicao, dado);
         Menu.resposta("Vetor alterado, posicao: " + posicao + ", valor: " + dado);
 
         this.pressione();
 
     }
 
+    /**
+     * Utiliza o método (Vetor.primeiro)
+     */
     private void adicionarPrimeira() {
         int dado = -1;
 
@@ -227,6 +229,9 @@ public class Menu {
 
     }
 
+    /**
+     * Utiliza o método (Vetor.ultimo)
+     */
     private void adicionarUltima() {
         int dado = -1;
 
@@ -251,6 +256,9 @@ public class Menu {
 
     }
 
+    /**
+     * Utiliza o método (Vetor.inicio)
+     */
     private void adicionarInicio() {
         int dado = -1;
 
@@ -275,6 +283,9 @@ public class Menu {
 
     }
 
+    /**
+     * Utiliza o método (Vetor.fim)
+     */
     private void adicionarFim() {
         int dado = -1;
 
@@ -299,6 +310,9 @@ public class Menu {
 
     }
 
+    /**
+     * Utiliza o método (Vetor.recuperar)
+     */
     private void recuperarPosicao() {
         int posicao = -1;
 
@@ -322,6 +336,9 @@ public class Menu {
         this.pressione();
     }
 
+    /**
+     * Utiliza o método (Vetor.apagar)
+     */
     private void removerPosicao() {
         int posicao = -1;
 
@@ -346,6 +363,7 @@ public class Menu {
 
     }
 
+<<<<<<< Updated upstream
     private void alocarTamanho() {
         int tamanho = -1;
 
@@ -370,6 +388,21 @@ public class Menu {
 
     }
 
+=======
+    /**
+     * Limpa todo o conteudo do terminal
+     */
+    public static void limparTela() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
+    }
+
+    /**
+     * Congela o programa com valor informado em segundos
+     * 
+     * @param segundos
+     */
+>>>>>>> Stashed changes
     public static void aguardar(int segundos) {
         try {
             TimeUnit.SECONDS.sleep(segundos);
@@ -378,19 +411,26 @@ public class Menu {
         }
     }
 
+    /**
+     * Exibe uma mensagem pedindo ao usuário que aperte ENTER
+     */
     public void pressione() {
         Menu.divisor();
         System.out.println(Menu.pressione);
 
         try {
             System.in.read();
-            System.out.println(Menu.retorno);
             this.principal();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Cor: azul | Exibe um titulo no terminal
+     * 
+     * @param titulo
+     */
     public static void titulo(String titulo) {
         String cor = "\033[1;34m";
         String reset = "\033[0m";
@@ -401,6 +441,11 @@ public class Menu {
         Menu.divisor();
     }
 
+    /**
+     * Cor: verde | Exibe um titulo no terminal
+     * 
+     * @param titulo
+     */
     public static void resposta(String titulo) {
         String cor = "\033[0;32m";
         String reset = "\033[0m";
@@ -409,6 +454,9 @@ public class Menu {
         System.out.print(reset);
     }
 
+    /**
+     * Exibe um divisor no terminal
+     */
     public static void divisor() {
         System.out.println("--------------------------------------");
     }
