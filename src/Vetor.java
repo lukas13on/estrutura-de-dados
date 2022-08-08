@@ -13,7 +13,7 @@ public class Vetor {
     /**
      * Cria um vetor de tamanho especifico, começando pelo zero
      * 
-     * @param tamanho ex: tamanho 5 resulta em 6 posições
+     * @param tamanho ex: tamanho 5 resulta em 6 (0-5) posições
      * @returns Vetor
      */
     public Vetor criar(int tamanho) {
@@ -22,21 +22,14 @@ public class Vetor {
     }
 
     /**
-     * Altera uma posicao os dados de uma determinada posição
+     * Altera uma posicao os dados de uma determinada posição,
+     * caso a posição não exista, ela é criada.
      * 
      * @param posicao
      * @param dado
      * @return Vetor
      */
-<<<<<<< Updated upstream
-    public Vetor mudar(int posicao, int dado) {
-        if (!this.existe(posicao)) {
-            int tamanho = this.tamanho() + 1;
-            this.alocar(tamanho);
-        }
-=======
     public Vetor alterar(int posicao, int dado) {
->>>>>>> Stashed changes
         this.dados[posicao] = dado;
         return this;
     }
@@ -156,8 +149,12 @@ public class Vetor {
      */
     public Vetor alocar(int tamanho) {
         int novoVetor[] = new int[tamanho];
-        for (int posicao = 0; posicao < this.tamanho(); posicao++) {
-            novoVetor[posicao] = this.dados[posicao];
+        int tamanhoVetor = this.tamanho();
+        tamanhoVetor = tamanhoVetor > tamanho ? tamanho : tamanhoVetor;
+        for (int posicao = 0; posicao < tamanhoVetor; posicao++) {
+            if(this.existe(posicao)){
+                novoVetor[posicao] = this.dados[posicao];
+            }
         }
         this.dados = novoVetor;
         return this;

@@ -363,7 +363,6 @@ public class Menu {
 
     }
 
-<<<<<<< Updated upstream
     private void alocarTamanho() {
         int tamanho = -1;
 
@@ -388,7 +387,6 @@ public class Menu {
 
     }
 
-=======
     /**
      * Limpa todo o conteudo do terminal
      */
@@ -402,7 +400,7 @@ public class Menu {
      * 
      * @param segundos
      */
->>>>>>> Stashed changes
+    
     public static void aguardar(int segundos) {
         try {
             TimeUnit.SECONDS.sleep(segundos);
